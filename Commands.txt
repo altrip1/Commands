@@ -1,0 +1,86 @@
+DBT and GCloud COMMANDS
+
+export REQUESTS_CA_BUNDLE=~/combined_certs.pem
+export SSL_CERT_FILE=~/combined_certs.pem
+export|grep -i REQ
+
+gcloud auth application-default login \
+  --scopes=https://www.googleapis.com/auth/bigquery,\
+https://www.googleapis.com/auth/drive.readonly,\
+https://www.googleapis.com/auth/iam.test
+
+https://docs.getdbt.com/docs/get-started/pip-install
+
+python3 -m venv dbt-env
+pip install dbt-core
+pip install dbt-bigquery
+
+deactivate
+
+—Prerequisites
+gcloud auth login
+gcloud auth application-default login
+source /Users/Alok.Tripathy/Desktop/dbt/dbt-env/bin/activate
+
+
+—GCLOUD COMMANDS
+gcloud config configurations list
+gcloud config configurations create ide
+gcloud config configurations activate ide
+gcloud config set project dmn01-rskcda-ide-10-11f3
+gcloud config configurations create bld
+gcloud config set project dmn01-rskcda-bld-01-997c
+gcloud config set disable_usage_reporting False
+gcloud config --help
+gsutil ls
+
+—DBT COMMANDS
+dbt debug. — to check all the connections
+dbt --version
+dbt init collateral_data_product
+dbt compile
+dbt debug --config-dir
+dbt seed --full-refresh
+dbt clean
+dbt parse
+dbt deps
+dbt run
+dbt run --profiles-dir ~/.dbt
+dbt compile && dbt run —models schema --profiles-dir ./profiles.yml
+cd /Users/Alok.Tripathy/.dbt/profiles.yml
+dbt compile && dbt run --full-refresh --m schema
+dbt run --full-refresh --m curation
+dbt debug --project-dir collateral_data_product --profiles-dir collateral_data_product
+dbt run --full-refresh -m schema --project-dir collateral_data_product --profiles-dir collateral_data_product
+
+
+/Users/Alok.Tripathy/Desktop/gcp_git/dmn01-rsk-frt-collateral-dbt/dbt/collateral_data_product/profiles.yml
+vi ~/.dbt/profiles.yml 
+
+Event Trigger Commands
+
+gcloud config configurations list
+gcloud auth login
+gcloud auth application-default login
+
+gcloud container clusters get-credentials dmn01-rskcda-bld-01-kcl-01-euwe2 --region europe-west2 --project dmn01-rskcda-bld-01-997c
+
+kubectl exec -n ns-kcl-dmn01-rskcda-argo frt-collateral-ingestion-service-6cc9775db5-dtwrn -it -- bash
+
+gcloud pubsub topics publish dmn01-bld-01-euwe2-rsk-frt-trigger-events --message="{\"sourceName\":\"ncino\",\"entityName\":\"collateral\”,\”triggerType\":\"collateral-ingestion-service\",\"status\":\"start\"}"
+
+gcloud pubsub topics publish dmn01-bld-01-euwe2-rsk-frt-trigger-events --message="{\"sourceName\":\"ncino\",\"entityName\":\"collateral\",\"triggerType\":\"collateral-ingestion-service\",\"status\":\"start\"}"
+
+KAFKA
+/Users/Alok.Tripathy/Downloads/kafka_2.13-3.3.1/bin
+kafka-console-producer.sh --bootstrap-server kafka.sbs-bld.oncp.dev:9092 --topic BLD-DMN01RSK-NCINO-COLLATERAL-LOAN --producer.config  client.properties
+
+
+
+
+
+
+
+
+
+
